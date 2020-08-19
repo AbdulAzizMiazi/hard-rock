@@ -169,9 +169,9 @@
                     <h1 id="lyrics-heading" class="text-success">
     
                     </h1>
-                    <p id="lyrics-place">
+                    <pre id="lyrics-place">
         
-                    </p>
+                    </pre>
                 </div>
             </div>
             
@@ -213,8 +213,11 @@
                     songNames.push(json.data[i].title);
                     songAuthors.push(json.data[i].artist.name);
                     albumNames.push(json.data[i].album.title);
+
                     document.getElementById(`lyrics-name-${solidCounter}`).innerText = json.data[solidCounter].title + " - "+ json.data[solidCounter].album.title;
+
                     document.getElementById(`author-${solidCounter}`).innerText = json.data[solidCounter].artist.name;
+
                     solidCounter++;
                 }
             })
