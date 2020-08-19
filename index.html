@@ -60,7 +60,7 @@
                         <p class="author lead">Album by <span id="author-0"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(0)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(0)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -72,7 +72,7 @@
                         <p class="author lead">Album by <span id="author-1"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success"onclick="clicker(1)">Get Lyrics</button>
+                        <button class="btn btn-success"onclick="clicker(1)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -83,7 +83,7 @@
                         <p class="author lead">Album by <span id="author-2"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(2)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(2)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -94,7 +94,7 @@
                         <p class="author lead">Album by <span id="author-3"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(3)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(3)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -105,7 +105,7 @@
                         <p class="author lead">Album by <span id="author-4"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(4)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(4)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -117,7 +117,7 @@
                         <p class="author lead">Album by <span id="author-5"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(5)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(5)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -128,7 +128,7 @@
                         <p class="author lead">Album by <span id="author-6"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(6)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(6)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -139,7 +139,7 @@
                         <p class="author lead">Album by <span id="author-7"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(7)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(7)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -150,7 +150,7 @@
                         <p class="author lead">Album by <span id="author-8"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(8)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(8)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
@@ -161,14 +161,20 @@
                         <p class="author lead">Album by <span id="author-9"></span></p>
                     </div>
                     <div class="col-md-3 text-md-right text-center">
-                        <button class="btn btn-success" onclick="clicker(9)">Get Lyrics</button>
+                        <button class="btn btn-success" onclick="clicker(9)"><a href="#lyrics-place">Get Lyrics</a></button>
                     </div>
                 </div>
                 <!-- ./ single result -->
+                <div class="align-items-center my-3 p-3">
+                    <h1 id="lyrics-heading" class="text-success">
+    
+                    </h1>
+                    <p id="lyrics-place">
+        
+                    </p>
+                </div>
             </div>
-            <p id="lyrics-place">
-
-            </p>
+            
 
 
         </main>
@@ -216,21 +222,23 @@
             
 
         })
-
+        
         function clicker(sequence) {
+            document.getElementById("lyrics-place").innerText = ""; 
             const artist = songAuthors[sequence];
             const title = songNames[sequence];
             const makeUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
+            console.log(makeUrl);
             fetch(makeUrl)
             .then(res => res.json())
             .then(text => {
+                document.getElementById("lyrics-heading").innerText = `${title} - ${artist}`
                 const songLyrics = text.lyrics;
                 const lyricsPlace = document.getElementById("lyrics-place");
                 var lyrics = document.createTextNode(songLyrics);
+                console.log(lyrics);
                 lyricsPlace.appendChild(lyrics);
             })
-                
-            return makeUrl;
         }
 
     </script>

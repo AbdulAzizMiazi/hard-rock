@@ -47,10 +47,19 @@ body{
     transform: scaleY(1.5);
     transform: translateX(20px);
 }
-
 #lyrics-place{
     font-size: 25px;
     font-weight: 600;
     line-height: 35px;
-    color: rgb(238, 182, 0);
+    color: rgb(238, 182, 0);  
+    text-align: center;
+}
+#lyrics-heading{
+    text-align: center;
+    text-decoration: underline;
+    margin: 50px 0px 30px 0px;
+}
+.btn-success > a {
+    color: white;
+    text-decoration: none;
 }
