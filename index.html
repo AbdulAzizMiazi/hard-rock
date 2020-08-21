@@ -165,7 +165,7 @@
                     </div>
                 </div>
                 <!-- ./ single result -->
-                <div class="align-items-center my-3 p-3">
+                <div class="align-items-center my-3 p-3" id="lyrics-div">
                     <h1 id="lyrics-heading" class="text-success">
     
                     </h1>
@@ -174,9 +174,6 @@
                     </pre >
                 </div>
             </div>
-            
-
-
         </main>
     </div>
     <!-- Optional JavaScript -->
@@ -188,14 +185,14 @@
     <!-- Custom Script Here -->
     <script>
  
-        let searchItem;
         const songNames = [];
         const songAuthors = [];
-        const albumNames = []; 
         
-        document.getElementById("searchBtn").addEventListener("click", function(){
-            document.getElementById("search-result-display").style.display = "block";
-            searchItem = document.getElementById("searchItem").value;
+        document.getElementById("searchBtn").addEventListener("click", function(){ 
+            //for clearing previous Lyrics Field
+            document.getElementById("lyrics-heading").innerText = "";
+            document.getElementById("lyrics-place").innerText = "";          
+            const searchItem = document.getElementById("searchItem").value;
             const url = `https://api.lyrics.ovh/suggest/${searchItem}`;
             fetch(url)
             .then(res => res.json()) 
@@ -209,41 +206,44 @@
                         counter++;
                         continue;
                     }
+                    //storing some data for using further
                     songs.push(song);
                     songNames.push(json.data[i].title);
                     songAuthors.push(json.data[i].artist.name);
-                    albumNames.push(json.data[i].album.title);
 
                     document.getElementById(`lyrics-name-${solidCounter}`).innerText = json.data[solidCounter].title + " - "+ json.data[solidCounter].album.title;
 
                     document.getElementById(`author-${solidCounter}`).innerText = json.data[solidCounter].artist.name;
-
                     solidCounter++;
                 }
+                setTimeout(()=>document.getElementById("search-result-display").style.display = "block");
             })
-
-            
-
         })
         
         function clicker(sequence) {
-            document.getElementById("lyrics-place").innerText = ""; 
+            document.getElementById("lyrics-heading").innerText = "";
+            document.getElementById("lyrics-place").innerText = "";
+            //making the dynamic api url for searching lyrics
             const artist = songAuthors[sequence];
             const title = songNames[sequence];
             const makeUrl = `https://api.lyrics.ovh/v1/${artist}/${title}`;
-            console.log(makeUrl);
             fetch(makeUrl)
             .then(res => res.json())
             .then(text => {
-                document.getElementById("lyrics-heading").innerText = `${title} - ${artist}`
+                document.getElementById("lyrics-heading").innerText = `${title} - ${artist}`;
                 const songLyrics = text.lyrics;
                 const lyricsPlace = document.getElementById("lyrics-place");
-                var lyrics = document.createTextNode(songLyrics);
-                console.log(lyrics);
-                lyricsPlace.appendChild(lyrics);
+                //managing lyrics data show
+                if (songLyrics == undefined) {
+                    let errorLyrics =  document.createTextNode("Your song couldn't be found :(");
+                    lyricsPlace.appendChild(errorLyrics);
+                }
+                else{
+                    let lyrics = document.createTextNode(songLyrics);
+                    lyricsPlace.appendChild(lyrics);
+                }
             })
         }
-
     </script>
 
 </body>
